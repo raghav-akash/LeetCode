@@ -5,24 +5,17 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
 public:
-    bool bipartiteBfs(int node,vector<int> adj[], vector<int> &col)
+    bool dfs(int i,vector<int> adj[],vector<int> &col)
     {
-        queue<int> q;
-        q.push(node);
-        col[node]=1;
-        while(!q.empty())
+        if(col[i]==-1) col[i]=1;
+        for(auto it:adj[i])
         {
-            int x=q.front();
-            q.pop();
-            for(auto it: adj[x])
+            if(col[it]==-1)
             {
-                if(col[it]==-1)
-                {
-                    col[it]=1-col[x];
-                    q.push(it);
-                }
-                else if(col[it]==col[x]) return false;
+                col[it]=1-col[i];
+                if(!dfs(it,adj,col)) return false;
             }
+            else if(col[it]==col[i]) return false;
         }
         return true;
     }
@@ -33,7 +26,7 @@ public:
 	    {
 	        if(col[i]==-1)
 	        {
-	            if(!bipartiteBfs(i,adj,col)) return false;
+	            if(!dfs(i,adj,col)) return false;
 	        }
 	    }
 	    return true;
