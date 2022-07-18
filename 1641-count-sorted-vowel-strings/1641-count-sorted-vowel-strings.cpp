@@ -1,20 +1,25 @@
 class Solution {
 public:
-    int countVowelStrings(int n) {
-        vector<int> dp(5,1);
-
-        while(--n)
+    vector<char> vowel{'a','e','i','o','u'};
+    void helper(int n,int last, int& cnt)
+    {
+        if(n==0) 
         {
-            for(int i=3;i>=0;i--)
+            cnt++;
+            return;
+        }
+        for(int i=0;i<5;i++)
+        {
+            if(i>=last)
             {
-                dp[i]+=dp[i+1];
+                helper(n-1,i,cnt);
             }
         }
-        
-        int sum=0;
-        
-        for(auto i:dp) sum+=i;
-        
-        return sum;
+    }
+    
+    int countVowelStrings(int n) {
+        int cnt=0;
+        helper(n,0,cnt);
+        return cnt;
     }
 };
