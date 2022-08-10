@@ -3,18 +3,20 @@ public:
     long long taskSchedulerII(vector<int>& tasks, int n) {
         map<long long int,long long int> mp;
         long long time=0;
-        for(int i:tasks)
+        int ind=0;
+        while(ind<tasks.size())
         {
             time++;
-            if(mp.find(i)==mp.end())
+            if(mp.find(tasks[ind])==mp.end())
             {
-                mp[i]=time+n+1; 
+                mp[tasks[ind]]=time+n+1;
             }
             else
             {
-                time=max(time,mp[i]);
-                mp[i]=time+n+1;
+                time=max(time, mp[tasks[ind]]);
+                mp[tasks[ind]]=time+n+1; 
             }
+            ind++;
         }
         
         return time;
